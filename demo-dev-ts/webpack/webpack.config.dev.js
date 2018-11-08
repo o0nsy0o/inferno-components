@@ -1,4 +1,5 @@
-var webpackBase = require('webpack.config.base');
+var webpackBase = require('./webpack.config.base');
+var webpack =require('webpack');
 module.exports = {
   // 修改 entry
   entry: [

@@ -377,3 +377,14 @@ new webpack.optimize.DedupePlugin(),//查找相等或近似的模块，避免在
 new webpack.optimize.UglifyJsPlugin(),//压缩代码
 new webpack.optimize.CommonsChunkPlugin('common.js')//提取公共代码
 ```
+
+# webpack-dev-server
+webpack-dev-server主要是启动了一个使用express的Http服务器。
+它的作用主要是用来伺服资源文件。此外这个Http服务器和client使用了websocket通讯协议，原始文件作出改动后，webpack-dev-server会实时的编译，但是最后的编译的文件并没有输出到目标文件夹
+
+> 你启动webpack-dev-server后，你在目标文件夹中是看不到编译后的文件的,实时编译后的文件都保存到了内存当中。因此很多同学使用webpack-dev-server进行开发的时候都看不到编译后的文件
+
+启动webpack-dev-server有2种方式：
+
+1. 通过cmd line
+2. 通过Node.js API`

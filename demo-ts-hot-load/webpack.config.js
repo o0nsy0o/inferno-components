@@ -9,15 +9,17 @@ const extractCSS = new MiniCssExtractPlugin({
   chunkFilename: "[id].[hash].css"
 });
 
-const CleanCommonsChunk = new CleanWebpackPlugin(['build/bundle.*.js', 'build/manifest.*.js'], {
+const CleanCommonsChunk = new CleanWebpackPlugin(['build/*.*'], {
   // 打印 log
   verbose: true,
   // 删除文件
   dry: false
 });
+
 const HtmlTemplate = new HtmlWebpackPlugin({
   template: './template/index.htm'
 });
+
 const devMode = process.env.NODE_ENV !== 'production'
 
 const VENOR = [
@@ -27,7 +29,6 @@ const VENOR = [
   "react-router",
   "react-router-dom"
 ]
-
 
 module.exports = {
   mode: 'development',

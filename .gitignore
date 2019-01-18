@@ -3,3 +3,4 @@ demo-ts/node_modules
 demo-dev-ts/node_modules
 demo-react-with-redux/node_modules
 demo-ts-hot-load/node_modules
+demo-config-dev-prod/node_modules

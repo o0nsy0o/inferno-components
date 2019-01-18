@@ -388,3 +388,79 @@ webpack-dev-server主要是启动了一个使用express的Http服务器。
 
 1. 通过cmd line
 2. 通过Node.js API`
+
+
+tree shaking
+
+tree shaking 可以帮助我们减少包的代码，生成更小的bundle包。
+在webpack4中我们只需要制定mode为production，就可以启动tree shaking。
+tree shaking使用的是es2015的模块系统。
+第三方库要使用es版本 例如 lodash 需要引入的是lodash-es版本
+
+
+css shaking
+
+css也有shaking
+我们使用PurifyCSS和glob-all来进行css shaking
+```
+// webpack.config.js
+const path = require("path");
+const PurifyCSS = require("purifycss-webpack");
+const glob = require("glob-all");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+let extractTextPlugin = new ExtractTextPlugin({
+  filename: "[name].min.css",
+  allChunks: false
+});
+
+let purifyCSS = new PurifyCSS({
+  paths: glob.sync([
+    // 要做CSS Tree Shaking的路径文件
+    path.resolve(__dirname, "./*.html"), // 请注意，我们同样需要对 html 文件进行 tree shaking
+    path.resolve(__dirname, "./src/*.js")
+  ])
+});
+
+module.exports = {
+  entry: {
+    app: "./src/app.js"
+  },
+  output: {
+    publicPath: __dirname + "/dist/",
+    path: path.resolve(__dirname, "dist"),
+    filename: "[name].bundle.js",
+    chunkFilename: "[name].chunk.js"
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: {
+            loader: "style-loader",
+            options: {
+              singleton: true
+            }
+          },
+          use: {
+            loader: "css-loader",
+            options: {
+              minimize: true
+            }
+          }
+        })
+      }
+    ]
+  },
+  plugins: [extractTextPlugin, purifyCSS]
+};
+```
+
+处理图片 
+
+在处理图片和进行base64编码的时候，需要使用url-loader。
+
+在压缩图片的时候，要使用img-loader插件，并且针对不同的图片类型启用不同的子插件。
+
+而postcss-loader和postcss-sprites则用来合成雪碧图，减少网络请求。

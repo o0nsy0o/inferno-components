@@ -13,7 +13,7 @@ module.exports = {
   mode: 'development',
   entry: {
     app1: './app/index.js',
-    app2:'./app/index1.js'
+    // app2:'./app/index1.js'
   }, // 入口文件
   output: {
     path: path.resolve(__dirname, 'build'), // 必须使用绝对地址，输出文件夹
